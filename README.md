@@ -1,6 +1,6 @@
 ## Project Description
 
-React-Native app that creates flash card decks that users can create and quiz flash cards.
+React-Native app that creates flash card decks that allows users to create and quiz flash cards.
 
 ## To run
 
