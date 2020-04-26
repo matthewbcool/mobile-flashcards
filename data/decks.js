@@ -58,14 +58,14 @@ export const getDecks = async () => {
 export const getDeck = async (deckKey) => {
 	try {
 		let decks = JSON.parse(await AsyncStorage.getItem(ALL_DECKS));
-
 		let deck = decks[deckKey];
 		let deckArray = [];
-		for (const [title, questions] of deckEntries) {
+		/* 		for (const [title, questions] of deckEntries) {
 			let numCards = questions.questions.length;
 			deckArray.push({ title: `${title}`, num: `${numCards}` });
-		}
+		} */
 		console.log(deck);
+		return deck;
 	} catch (e) {
 		console.log(e.message);
 	}

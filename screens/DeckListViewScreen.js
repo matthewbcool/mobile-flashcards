@@ -18,10 +18,11 @@ class DeckListView extends React.Component {
 		const { theme } = this.props;
 		const { navigation } = this.props;
 
-		const selectDeck = (title) => {
-			//set current deck here with async storage
-			console.log(title);
-			navigation.navigate('Deck View');
+		const selectDeck = async (title) => {
+			//get current deck here with async storage
+			let currentDeck = await getDeck(title);
+
+			navigation.navigate('Deck View', { currentDeck });
 		};
 
 		return (

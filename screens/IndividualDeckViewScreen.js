@@ -2,38 +2,36 @@ import React from 'react';
 import { withTheme, Touchable, ScreenContainer, Container, Icon, Button } from '@draftbit/ui';
 import { StyleSheet, Text, View } from 'react-native';
 
-class IndividualDeckView extends React.Component {
-	render() {
-		const { theme } = this.props;
-		const { navigation } = this.props;
-
-		return (
-			<ScreenContainer scrollable={false} hasSafeArea={true}>
-				<Container useThemeGutterPadding={true} style={styles.mainDeckContainer}>
-					<View style={styles.mainDeckWrapper}>
-						<Text style={theme.typography.headline2}>Title of Deck</Text>
-						<Text style={StyleSheet.flatten([theme.typography.subtitle1, { color: theme.colors.light }])}>
-							Number of Cards in Deck
-						</Text>
-						<View style={styles.addCardWrapper}>
-							<Touchable onPress={() => navigation.navigate('Create Card')} style={styles.addCardTouch}>
-								<Icon
-									name="MaterialIcons/add-circle-outline"
-									color={theme.colors.strong}
-									size={48}
-									style={styles.addCardIcon}
-								/>
-								<Text>Add Card</Text>
-							</Touchable>
-						</View>
+function IndividualDeckView({ route, navigation, theme }) {
+	const { title } = route.params.currentDeck;
+	const { questions } = route.params.currentDeck;
+	console.log(route.params);
+	return (
+		<ScreenContainer scrollable={false} hasSafeArea={true}>
+			<Container useThemeGutterPadding={true} style={styles.mainDeckContainer}>
+				<View style={styles.mainDeckWrapper}>
+					<Text style={theme.typography.headline2}>{JSON.stringify(title)}</Text>
+					<Text style={StyleSheet.flatten([theme.typography.subtitle1, { color: theme.colors.light }])}>
+						{questions.length}
+					</Text>
+					<View style={styles.addCardWrapper}>
+						<Touchable onPress={() => navigation.navigate('Create Card')} style={styles.addCardTouch}>
+							<Icon
+								name="MaterialIcons/add-circle-outline"
+								color={theme.colors.strong}
+								size={48}
+								style={styles.addCardIcon}
+							/>
+							<Text>Add Card</Text>
+						</Touchable>
 					</View>
-					<Button onPress={() => navigation.navigate('Quiz View')} type="solid">
-						Start Quiz
-					</Button>
-				</Container>
-			</ScreenContainer>
-		);
-	}
+				</View>
+				<Button onPress={() => navigation.navigate('Quiz View')} type="solid">
+					Start Quiz
+				</Button>
+			</Container>
+		</ScreenContainer>
+	);
 }
 
 const styles = StyleSheet.create({
