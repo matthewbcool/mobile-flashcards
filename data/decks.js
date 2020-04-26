@@ -64,7 +64,7 @@ export const getDeck = async (deckKey) => {
 			let numCards = questions.questions.length;
 			deckArray.push({ title: `${title}`, num: `${numCards}` });
 		} */
-		console.log(deck);
+
 		return deck;
 	} catch (e) {
 		console.log(e.message);

@@ -2,10 +2,15 @@ import React from 'react';
 import { withTheme, Touchable, ScreenContainer, Container, Icon, Button } from '@draftbit/ui';
 import { StyleSheet, Text, View } from 'react-native';
 
-function IndividualDeckView({ route, navigation, theme }) {
+export const IndividualDeckView = ({ route, navigation, theme }) => {
 	const { title } = route.params.currentDeck;
 	const { questions } = route.params.currentDeck;
-	console.log(route.params);
+	const { currentDeck } = route.params;
+
+	const startQuiz = () => {
+		navigation.navigate('Quiz View', { currentDeck });
+	};
+
 	return (
 		<ScreenContainer scrollable={false} hasSafeArea={true}>
 			<Container useThemeGutterPadding={true} style={styles.mainDeckContainer}>
@@ -26,13 +31,13 @@ function IndividualDeckView({ route, navigation, theme }) {
 						</Touchable>
 					</View>
 				</View>
-				<Button onPress={() => navigation.navigate('Quiz View')} type="solid">
+				<Button onPress={startQuiz} type="solid">
 					Start Quiz
 				</Button>
 			</Container>
 		</ScreenContainer>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	addCardTouch: {
