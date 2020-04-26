@@ -1,10 +1,10 @@
 import React from 'react';
 import { withTheme, Container, ScreenContainer, Icon, Touchable, RowBodyCheckbox } from '@draftbit/ui';
-import { StyleSheet, View, Text } from 'react-native';
-import { getDecks, storeLogger, ALL_DECKS } from '../data/decks';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { getDecks, getDeck, storeLogger } from '../data/decks';
 
 class DeckListView extends React.Component {
-	state = { decks: [], currentTitle: '' };
+	state = { decks: [], selectedDeck: '' };
 
 	componentDidMount() {
 		getDecks().then((response) => {
@@ -18,23 +18,27 @@ class DeckListView extends React.Component {
 		const { theme } = this.props;
 		const { navigation } = this.props;
 
-		const selectDeck = () => navigation.navigate('Deck View');
+		const selectDeck = (title) => {
+			//set current deck here with async storage
+			console.log(title);
+			navigation.navigate('Deck View');
+		};
 
-		let decksFromStorage = this.state.decks || 'undefined'; //getdecks
-		const deckList = decksFromStorage.map((deck, index) => {
-			return (
-				<Touchable key={`${index}-deck-touchable`} onPress={selectDeck}>
-					<View style={styles.deckListContainer}>
-						<Text style={theme.typography.headline4}>{deck.title}</Text>
-						<Text style={theme.typography.subtitle1}>{deck.num}</Text>
-					</View>
-				</Touchable>
-			);
-		});
 		return (
-			<ScreenContainer scrollable={true} hasSafeArea={true}>
+			<ScreenContainer scrollable={false} hasSafeArea={true}>
 				<Container useThemeGutterPadding={true} style={styles.mainDeckListContainer}>
-					{deckList}
+					<FlatList
+						data={this.state.decks}
+						renderItem={(deck) => (
+							<Touchable onPress={() => selectDeck(deck.item.title)}>
+								<View style={styles.deckListContainer}>
+									<Text style={theme.typography.headline4}>{deck.item.title}</Text>
+									<Text style={theme.typography.subtitle1}>{deck.item.num}</Text>
+								</View>
+							</Touchable>
+						)}
+						keyExtractor={(deck) => deck.title}
+					/>
 					<Touchable onPress={() => navigation.navigate('Create Deck')}>
 						<View style={styles.addDeckWrapper}>
 							<Icon
