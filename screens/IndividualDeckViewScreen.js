@@ -16,7 +16,7 @@ class IndividualDeckView extends React.Component {
 							Number of Cards in Deck
 						</Text>
 						<View style={styles.addCardWrapper}>
-							<Touchable style={styles.addCardTouch}>
+							<Touchable onPress={() => navigation.navigate('Create Card')} style={styles.addCardTouch}>
 								<Icon
 									name="MaterialIcons/add-circle-outline"
 									color={theme.colors.strong}
@@ -27,7 +27,9 @@ class IndividualDeckView extends React.Component {
 							</Touchable>
 						</View>
 					</View>
-					<Button type="solid">Start Quiz</Button>
+					<Button onPress={() => navigation.navigate('Quiz View')} type="solid">
+						Start Quiz
+					</Button>
 				</Container>
 			</ScreenContainer>
 		);
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
 	},
 	mainDeckContainer: {
 		paddingTop: 16,
-		minHeight: 500,
+		minHeight: 300,
 		justifyContent: 'space-between',
 	},
 

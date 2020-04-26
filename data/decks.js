@@ -24,7 +24,22 @@ export const decks = {
 	},
 };
 
-export const getDecks = () => {};
-export const getDeck = () => {};
-export const saveDeckTitle = () => {};
-export const addCardToDeck = () => {};
+export const getDecks = (decks) => {
+	// return an array of objects with a title and number of cards.
+	let deckEntries = Object.entries(decks);
+	let deckArray = [];
+	for (const [title, questions] of deckEntries) {
+		let numCards = questions.questions.length;
+		deckArray.push({ title: `${title}`, num: `${numCards}` });
+	}
+	return deckArray;
+};
+export const getDeck = () => {
+	console.log('get a specific deck');
+};
+export const saveDeckTitle = () => {
+	console.log('save a deck title');
+};
+export const addCardToDeck = () => {
+	console.log('add a card to the deck');
+};
