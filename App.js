@@ -10,6 +10,7 @@ import IndividualDeckView from './screens/IndividualDeckViewScreen';
 import QuizView from './screens/QuizViewScreen';
 import NewQuestionView from './screens/NewQuestionViewScreen';
 import NewDeckView from './screens/NewDeckViewScreen';
+import { initAsyncStore, decks, storeLogger, ALL_DECKS } from './data/decks';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,12 @@ export default class App extends React.PureComponent {
 	state = {
 		isReady: false,
 	};
+
+	componentDidMount() {
+		initAsyncStore(decks);
+		console.log('initialized!-------');
+		storeLogger(ALL_DECKS);
+	}
 
 	render() {
 		if (!this.state.isReady) {

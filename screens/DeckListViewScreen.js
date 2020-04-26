@@ -1,21 +1,29 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { withTheme, Container, ScreenContainer, Icon, Touchable, RowBodyCheckbox } from '@draftbit/ui';
 import { StyleSheet, View, Text } from 'react-native';
-import { decks, getDecks } from '../data/decks';
+import { getDecks, storeLogger, ALL_DECKS } from '../data/decks';
 
 class DeckListView extends React.Component {
-	state = { decks: [] };
+	state = { decks: [], currentTitle: '' };
 
 	componentDidMount() {
-		this.setState({ decks: getDecks(decks) });
+		getDecks().then((response) => {
+			this.setState({
+				decks: response,
+			});
+		});
 	}
 
 	render() {
 		const { theme } = this.props;
 		const { navigation } = this.props;
-		const deckList = this.state.decks.map((deck) => {
+
+		const selectDeck = () => navigation.navigate('Deck View');
+
+		let decksFromStorage = this.state.decks || 'undefined'; //getdecks
+		const deckList = decksFromStorage.map((deck, index) => {
 			return (
-				<Touchable onPress={() => navigation.navigate('Deck View')}>
+				<Touchable key={`${index}-deck-touchable`} onPress={selectDeck}>
 					<View style={styles.deckListContainer}>
 						<Text style={theme.typography.headline4}>{deck.title}</Text>
 						<Text style={theme.typography.subtitle1}>{deck.num}</Text>

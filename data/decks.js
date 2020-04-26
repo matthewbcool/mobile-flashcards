@@ -1,3 +1,6 @@
+import { AsyncStorage } from 'react-native';
+export const ALL_DECKS = 'Flashcards:allDecks';
+
 export const decks = {
 	React: {
 		title: 'React',
@@ -24,22 +27,64 @@ export const decks = {
 	},
 };
 
-export const getDecks = (decks) => {
-	// return an array of objects with a title and number of cards.
-	let deckEntries = Object.entries(decks);
-	let deckArray = [];
-	for (const [title, questions] of deckEntries) {
-		let numCards = questions.questions.length;
-		deckArray.push({ title: `${title}`, num: `${numCards}` });
+export const initAsyncStore = async (decks) => {
+	try {
+		const value = await AsyncStorage.getItem(ALL_DECKS);
+		if (value === null) {
+			console.log('no value in async store, setting value now');
+			await AsyncStorage.setItem(ALL_DECKS, JSON.stringify(decks));
+		}
+	} catch (e) {
+		console.log(e.message);
 	}
-	return deckArray;
 };
+
+export const getDecks = async () => {
+	try {
+		let decks = JSON.parse(await AsyncStorage.getItem(ALL_DECKS));
+		let deckEntries = await Object.entries(decks);
+
+		let deckArray = [];
+		for (const [title, questions] of deckEntries) {
+			let numCards = questions.questions.length;
+			deckArray.push({ title: `${title}`, num: `${numCards}` });
+		}
+		return deckArray;
+	} catch (e) {
+		console.log(e.message);
+	}
+};
+
 export const getDeck = () => {
 	console.log('get a specific deck');
 };
-export const saveDeckTitle = () => {
-	console.log('save a deck title');
+
+export const saveDeck = async (title) => {
+	try {
+		return await AsyncStorage.mergeItem(
+			ALL_DECKS,
+			JSON.stringify({
+				[title]: {
+					title,
+					questions: [],
+					results: [],
+				},
+			})
+		);
+	} catch (e) {
+		console.log(e.message);
+	}
 };
-export const addCardToDeck = () => {
+export const addCardToDeck = (card) => {
 	console.log('add a card to the deck');
+};
+
+export const storeLogger = async (KEY) => {
+	try {
+		let item = await AsyncStorage.getItem(KEY);
+		console.log(item);
+		return item;
+	} catch (e) {
+		console.log(e.message);
+	}
 };
