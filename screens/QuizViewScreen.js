@@ -23,6 +23,13 @@ export const QuizView = ({ route, navigation, theme }) => {
 		setCurrentAnswer(questionArray[currentQuestionIndex + 1].answer);
 		setQuestionIndex(currentQuestionIndex + 1);
 	};
+
+	const addWrong = () => {
+		setNumberCorrect(numberCorrect);
+		setCurrentQuestion(questionArray[currentQuestionIndex + 1].question);
+		setCurrentAnswer(questionArray[currentQuestionIndex + 1].answer);
+		setQuestionIndex(currentQuestionIndex + 1);
+	};
 	const getPercentCorrect = () => {
 		return Math.floor((numberCorrect / totalQuestions) * 100);
 	};
@@ -51,7 +58,7 @@ export const QuizView = ({ route, navigation, theme }) => {
 			</Container>
 			<Divider color={theme.colors.divider} style={styles.dividerQL} />
 			<View style={styles.view3H}>
-				<FAB type="standard" icon="Feather/x" color={theme.colors.custom_rgb201_0_0} />
+				<FAB onPress={addWrong} type="standard" icon="Feather/x" color={theme.colors.custom_rgb201_0_0} />
 				<FAB
 					onPress={addCorrect}
 					color={theme.colors.custom_rgb0_201_25}
