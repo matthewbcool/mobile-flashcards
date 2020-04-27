@@ -13,9 +13,10 @@ class NewQuestionView extends React.Component {
 		let { title } = route.params.currentDeck;
 		const addNewCard = () => {
 			// probably data is not right here- have to check formats
+			//TODO make sure this is the correct card data to send
 			let newQuestionObj = { question: this.state.questionValue, answer: this.state.answerValue };
 			let newQuestionArray = [...questions, newQuestionObj];
-			resetStorage();
+
 			/* addCardToDeck(title, newQuestionArray); */
 			navigation.navigate('Deck View');
 		};

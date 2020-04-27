@@ -48,8 +48,8 @@ class DeckListView extends React.Component {
 								size={80}
 								style={styles.addIcon}
 							/>
-							<Text>Add Deck</Text>
 						</View>
+						<Text style={styles.addDeckLabel}>Add Deck</Text>
 					</Touchable>
 				</Container>
 			</ScreenContainer>
@@ -74,6 +74,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		marginTop: 16,
+	},
+	addDeckLabel: {
+		width: 80,
+		paddingLeft: 5,
 	},
 
 	deckTitle: {},

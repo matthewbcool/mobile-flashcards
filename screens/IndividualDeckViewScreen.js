@@ -28,11 +28,11 @@ export const IndividualDeckView = ({ route, navigation, theme }) => {
 							<Icon
 								name="MaterialIcons/add-circle-outline"
 								color={theme.colors.strong}
-								size={48}
+								size={58}
 								style={styles.addCardIcon}
 							/>
-							<Text>Add Card</Text>
 						</Touchable>
+						<Text style={styles.addCardLabel}>Add Card</Text>
 					</View>
 				</View>
 				<Button onPress={startQuiz} type="solid">
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		flexDirection: 'column',
-		height: 70,
-		width: 70,
+		height: 58,
+		width: 58,
 	},
 	mainDeckContainer: {
 		paddingTop: 16,
@@ -59,8 +59,13 @@ const styles = StyleSheet.create({
 	},
 
 	addCardIcon: {
-		width: 48,
-		height: 48,
+		width: 58,
+		height: 58,
+		justifyContent: 'center',
+	},
+	addCardLabel: {
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 
 	mainDeckWrapper: {
@@ -71,8 +76,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		flexDirection: 'column',
-		height: 100,
-		width: 100,
 	},
 });
 
