@@ -22,7 +22,6 @@ export default class App extends React.PureComponent {
 	componentDidMount() {
 		initAsyncStore(decks);
 		console.log('initialized!-------');
-		storeLogger(ALL_DECKS);
 	}
 
 	render() {

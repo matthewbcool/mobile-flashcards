@@ -18,9 +18,10 @@ class NewQuestionView extends React.Component {
 			let newQuestionArray = [...questions, newQuestionObj];
 
 			addCardToDeck(title, newQuestionArray);
+			questions = newQuestionArray;
+			let newCurrentDeck = { title, questions };
 
-			newQuestionAdded = this.state.addedQuestion;
-			navigation.navigate('Deck View', { newQuestionAdded });
+			navigation.navigate('Deck View', { newCurrentDeck });
 		};
 		return (
 			<ScreenContainer hasSafeArea={true} scrollable={false}>

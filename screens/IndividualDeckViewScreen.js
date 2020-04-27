@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { withTheme, Touchable, ScreenContainer, Container, Icon, Button } from '@draftbit/ui';
 import { StyleSheet, Text, View } from 'react-native';
 import { getDeck } from '../data/decks';
@@ -8,17 +8,17 @@ export const IndividualDeckView = ({ route, navigation, theme }) => {
 	const [questions, setQuestions] = useState(route.params.currentDeck.questions);
 	const [currentDeck, setCurrentDeck] = useState(route.params.currentDeck);
 
-	const fetchDeck = () => {
-		getDeck(title).then((response) => {
-			//response should be the currentDeck
-			setTitle(response.title);
-			setQuestions(response.questions);
-			setCurrentDeck(response);
-		});
-	};
 	useEffect(() => {
-		fetchDeck();
-	}, [currentDeck]);
+		const interval = setInterval(() => {
+			getDeck(title).then((response) => {
+				//response should be the currentDeck
+				setTitle(response.title);
+				setQuestions(response.questions);
+				setCurrentDeck(response);
+			});
+		}, 500);
+		return () => clearInterval(interval);
+	}, []);
 
 	const startQuiz = () => {
 		navigation.navigate('Quiz View', { currentDeck });
