@@ -10,25 +10,31 @@ export const QuizView = ({ route, navigation, theme }) => {
 	const [currentQuestion, setCurrentQuestion] = useState(questionArray[0].question);
 	const [currentAnswer, setCurrentAnswer] = useState(questionArray[0].answer);
 	const [showAnswer, toggleAnswer] = useState(false);
-
 	const [numberCorrect, setNumberCorrect] = useState(0);
-
+	const [showQuizFinished, setQuizFinished] = useState(false);
 	const cardFlip = () => {
 		toggleAnswer(!showAnswer);
 	};
 
+	const forwardCard = (choice) => {
+		if (typeof questionArray[currentQuestionIndex + 1] !== 'undefined') {
+			setCurrentQuestion(questionArray[currentQuestionIndex + 1].question);
+			setCurrentAnswer(questionArray[currentQuestionIndex + 1].answer);
+			setQuestionIndex(currentQuestionIndex + 1);
+		} else {
+			setQuizFinished(true);
+		}
+	};
+
 	const addCorrect = () => {
-		setNumberCorrect(numberCorrect + 1);
-		setCurrentQuestion(questionArray[currentQuestionIndex + 1].question);
-		setCurrentAnswer(questionArray[currentQuestionIndex + 1].answer);
-		setQuestionIndex(currentQuestionIndex + 1);
+		forwardCard();
+		if (numberCorrect + 1 <= totalQuestions) {
+			setNumberCorrect(numberCorrect + 1);
+		}
 	};
 
 	const addWrong = () => {
-		setNumberCorrect(numberCorrect);
-		setCurrentQuestion(questionArray[currentQuestionIndex + 1].question);
-		setCurrentAnswer(questionArray[currentQuestionIndex + 1].answer);
-		setQuestionIndex(currentQuestionIndex + 1);
+		forwardCard();
 	};
 	const getPercentCorrect = () => {
 		return Math.floor((numberCorrect / totalQuestions) * 100);
@@ -46,11 +52,14 @@ export const QuizView = ({ route, navigation, theme }) => {
 							{`Correct ${getPercentCorrect()}%`}
 						</Text>
 					</View>
-					{showAnswer ? (
+					{showQuizFinished ? (
+						<Text>Finshed Quiz: {`${getPercentCorrect()}%`} </Text>
+					) : showAnswer ? (
 						<Text style={theme.typography.headline3}>{currentAnswer}</Text>
 					) : (
 						<Text style={theme.typography.headline3}>{currentQuestion}</Text>
 					)}
+
 					<Button onPress={cardFlip} type="solid">
 						Flip Card
 					</Button>
