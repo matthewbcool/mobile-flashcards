@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTheme, Button, Container, ScreenContainer } from '@draftbit/ui';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import { addCardToDeck, resetStorage } from '../data/decks';
+import { addCardToDeck, resetStorage, storeLogger, ALL_DECKS } from '../data/decks';
 class NewQuestionView extends React.Component {
 	state = { questionValue: '', answerValue: '' };
 
@@ -17,7 +17,8 @@ class NewQuestionView extends React.Component {
 			let newQuestionObj = { question: this.state.questionValue, answer: this.state.answerValue };
 			let newQuestionArray = [...questions, newQuestionObj];
 
-			/* addCardToDeck(title, newQuestionArray); */
+			addCardToDeck(title, newQuestionArray);
+			storeLogger(ALL_DECKS);
 			navigation.navigate('Deck View');
 		};
 		return (

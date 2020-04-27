@@ -1,6 +1,7 @@
 import React from 'react';
 import { withTheme, Container, ScreenContainer, Button } from '@draftbit/ui';
 import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { saveDeck } from '../data/decks';
 
 class NewDeckView extends React.Component {
 	state = { deckTitle: '' };
@@ -11,7 +12,11 @@ class NewDeckView extends React.Component {
 		const onChangeText = (deckTitle) => {
 			this.setState({ deckTitle });
 		};
-
+		const saveToDecks = () => {
+			let title = this.state.deckTitle;
+			saveDeck(title);
+			navigation.navigate('Deck List');
+		};
 		return (
 			<ScreenContainer scrollable={false} hasSafeArea={true}>
 				<Container useThemeGutterPadding={true} style={styles.containerCS}>
@@ -19,7 +24,6 @@ class NewDeckView extends React.Component {
 						<Text>Enter Deck Title:</Text>
 						<TextInput
 							autoFocus={false}
-							autoCapitalize="characters"
 							clearTextOnFocus={true}
 							placeholder="Title of Deck"
 							editable={true}
@@ -31,7 +35,9 @@ class NewDeckView extends React.Component {
 						/>
 					</View>
 					<View style={styles.viewYg}>
-						<Button type="solid">Create New Deck</Button>
+						<Button onPress={saveToDecks} type="solid">
+							Create New Deck
+						</Button>
 						<Button onPress={() => navigation.navigate('Deck List')} type="outline">
 							Cancel
 						</Button>

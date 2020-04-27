@@ -86,14 +86,14 @@ export const saveDeck = async (title) => {
 		console.log(e.message);
 	}
 };
-export const addCardToDeck = async (title, questions) => {
+export const addCardToDeck = async (title, newQuestionsArray) => {
 	try {
 		return await AsyncStorage.mergeItem(
 			ALL_DECKS,
 			JSON.stringify({
 				[title]: {
 					title,
-					questions: [questions],
+					questions: [...newQuestionsArray],
 				},
 			})
 		);
