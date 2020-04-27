@@ -8,20 +8,21 @@ export const IndividualDeckView = ({ route, navigation, theme }) => {
 	const [questions, setQuestions] = useState(route.params.currentDeck.questions);
 	const [currentDeck, setCurrentDeck] = useState(route.params.currentDeck);
 
-	const startQuiz = () => {
-		navigation.navigate('Quiz View', { currentDeck });
-	};
-
-	useEffect(() => {
+	const fetchDeck = () => {
 		getDeck(title).then((response) => {
 			//response should be the currentDeck
 			setTitle(response.title);
 			setQuestions(response.questions);
 			setCurrentDeck(response);
-			console.log('call made to useState!');
 		});
+	};
+	useEffect(() => {
+		fetchDeck();
 	}, [currentDeck]);
 
+	const startQuiz = () => {
+		navigation.navigate('Quiz View', { currentDeck });
+	};
 	const addCard = () => {
 		navigation.navigate('Create Card', { currentDeck });
 	};
