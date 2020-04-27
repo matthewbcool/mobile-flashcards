@@ -13,6 +13,15 @@ class DeckListView extends React.Component {
 			});
 		});
 	}
+	componentDidUpdate(prevProps) {
+		if (prevProps) {
+			getDecks().then((response) => {
+				this.setState({
+					decks: response,
+				});
+			});
+		}
+	}
 
 	render() {
 		const { theme } = this.props;

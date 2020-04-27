@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withTheme, Touchable, ScreenContainer, Container, Icon, Button } from '@draftbit/ui';
 import { StyleSheet, Text, View } from 'react-native';
+import { getDeck } from '../data/decks';
 
 export const IndividualDeckView = ({ route, navigation, theme }) => {
-	const { title } = route.params.currentDeck;
-	const { questions } = route.params.currentDeck;
-	const { currentDeck } = route.params;
+	const [title, setTitle] = useState(route.params.currentDeck.title);
+	const [questions, setQuestions] = useState(route.params.currentDeck.questions);
+	const [currentDeck, setCurrentDeck] = useState(route.params.currentDeck);
 
 	const startQuiz = () => {
 		navigation.navigate('Quiz View', { currentDeck });
 	};
+
+	useEffect(() => {
+		getDeck(title).then((response) => {
+			//response should be the currentDeck
+			setTitle(response.title);
+			setQuestions(response.questions);
+			setCurrentDeck(response);
+			console.log('call made to useState!');
+		});
+	}, [currentDeck]);
 
 	const addCard = () => {
 		navigation.navigate('Create Card', { currentDeck });

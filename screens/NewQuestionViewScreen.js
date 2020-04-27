@@ -1,9 +1,9 @@
 import React from 'react';
 import { withTheme, Button, Container, ScreenContainer } from '@draftbit/ui';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import { addCardToDeck, resetStorage, storeLogger, ALL_DECKS } from '../data/decks';
+import { addCardToDeck, resetStorage, storeLogger, ALL_DECKS, getDeck } from '../data/decks';
 class NewQuestionView extends React.Component {
-	state = { questionValue: '', answerValue: '' };
+	state = { questionValue: '', answerValue: '', addedQuestion: true };
 
 	render() {
 		const { theme } = this.props;
@@ -18,8 +18,9 @@ class NewQuestionView extends React.Component {
 			let newQuestionArray = [...questions, newQuestionObj];
 
 			addCardToDeck(title, newQuestionArray);
-			storeLogger(ALL_DECKS);
-			navigation.navigate('Deck View');
+
+			newQuestionAdded = this.state.addedQuestion;
+			navigation.navigate('Deck View', { newQuestionAdded });
 		};
 		return (
 			<ScreenContainer hasSafeArea={true} scrollable={false}>
