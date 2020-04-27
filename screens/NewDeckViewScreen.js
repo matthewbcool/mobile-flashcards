@@ -9,7 +9,6 @@ class NewDeckView extends React.Component {
 		const { theme } = this.props;
 		const { navigation } = this.props;
 		const onChangeText = (deckTitle) => {
-			console.log(this.state.deckTitle);
 			this.setState({ deckTitle });
 		};
 

@@ -1,27 +1,40 @@
 import React from 'react';
 import { withTheme, Button, Container, ScreenContainer } from '@draftbit/ui';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-
+import { addCardToDeck, resetStorage } from '../data/decks';
 class NewQuestionView extends React.Component {
-	state = {};
+	state = { questionValue: '', answerValue: '' };
 
 	render() {
 		const { theme } = this.props;
 		const { navigation } = this.props;
-
+		const { route } = this.props;
+		let { questions } = route.params.currentDeck;
+		let { title } = route.params.currentDeck;
+		const addNewCard = () => {
+			// probably data is not right here- have to check formats
+			let newQuestionObj = { question: this.state.questionValue, answer: this.state.answerValue };
+			let newQuestionArray = [...questions, newQuestionObj];
+			resetStorage();
+			/* addCardToDeck(title, newQuestionArray); */
+			navigation.navigate('Deck View');
+		};
 		return (
 			<ScreenContainer hasSafeArea={true} scrollable={false}>
 				<Container useThemeGutterPadding={true} style={styles.containerGs}>
 					<View>
 						<Text>Enter Question</Text>
 						<TextInput
-							autoCapitalize="characters"
 							clearTextOnFocus={true}
 							editable={true}
 							color={theme.colors.strong}
 							selectTextOnFocus={true}
 							autoFocus={true}
-							onChangeText={(questionValue) => this.setState({ questionValue })}
+							onChangeText={(questionValue) => {
+								this.setState({
+									questionValue,
+								});
+							}}
 							value={this.state.questionValue}
 							placeholder="Question"
 							style={styles.textInputMz}
@@ -31,14 +44,16 @@ class NewQuestionView extends React.Component {
 						<Text>Enter Answer</Text>
 						<TextInput
 							placeholder="Answer"
-							onChangeText={(answerValue) => this.setState({ answerValue })}
+							onChangeText={(answerValue) =>
+								this.setState({
+									answerValue,
+								})
+							}
 							value={this.state.answerValue}
-							autoCapitalize="characters"
 							clearTextOnFocus={true}
 							editable={true}
 							color={theme.colors.strong}
 							selectTextOnFocus={true}
-							autoFocus={true}
 							style={styles.textInputZg}
 						/>
 					</View>
@@ -46,7 +61,9 @@ class NewQuestionView extends React.Component {
 						<Button type="outline" onPress={() => navigation.navigate('Deck View')}>
 							Cancel
 						</Button>
-						<Button type="solid">Submit</Button>
+						<Button onPress={addNewCard} type="solid">
+							Submit
+						</Button>
 					</View>
 				</Container>
 			</ScreenContainer>

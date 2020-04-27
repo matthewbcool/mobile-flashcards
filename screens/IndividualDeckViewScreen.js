@@ -11,6 +11,10 @@ export const IndividualDeckView = ({ route, navigation, theme }) => {
 		navigation.navigate('Quiz View', { currentDeck });
 	};
 
+	const addCard = () => {
+		navigation.navigate('Create Card', { currentDeck });
+	};
+
 	return (
 		<ScreenContainer scrollable={false} hasSafeArea={true}>
 			<Container useThemeGutterPadding={true} style={styles.mainDeckContainer}>
@@ -20,7 +24,7 @@ export const IndividualDeckView = ({ route, navigation, theme }) => {
 						{questions.length}
 					</Text>
 					<View style={styles.addCardWrapper}>
-						<Touchable onPress={() => navigation.navigate('Create Card')} style={styles.addCardTouch}>
+						<Touchable onPress={addCard} style={styles.addCardTouch}>
 							<Icon
 								name="MaterialIcons/add-circle-outline"
 								color={theme.colors.strong}

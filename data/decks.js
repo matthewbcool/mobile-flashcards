@@ -79,7 +79,6 @@ export const saveDeck = async (title) => {
 				[title]: {
 					title,
 					questions: [],
-					results: [],
 				},
 			})
 		);
@@ -87,8 +86,20 @@ export const saveDeck = async (title) => {
 		console.log(e.message);
 	}
 };
-export const addCardToDeck = (card) => {
-	console.log('add a card to the deck');
+export const addCardToDeck = async (title, questions) => {
+	try {
+		return await AsyncStorage.mergeItem(
+			ALL_DECKS,
+			JSON.stringify({
+				[title]: {
+					title,
+					questions: [questions],
+				},
+			})
+		);
+	} catch (e) {
+		console.log(e.message);
+	}
 };
 
 export const storeLogger = async (KEY) => {
@@ -99,4 +110,8 @@ export const storeLogger = async (KEY) => {
 	} catch (e) {
 		console.log(e.message);
 	}
+};
+
+export const resetStorage = async () => {
+	AsyncStorage.clear();
 };
