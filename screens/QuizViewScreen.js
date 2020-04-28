@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { withTheme, Container, ScreenContainer, Divider, Button, FAB } from '@draftbit/ui';
 import { View, StyleSheet, Text } from 'react-native';
+import { setLastRunThrough } from '../data/decks';
 
 export const QuizView = ({ route, navigation, theme }) => {
 	const totalQuestions = route.params.currentDeck.questions.length;
@@ -23,6 +24,8 @@ export const QuizView = ({ route, navigation, theme }) => {
 			setQuestionIndex(currentQuestionIndex + 1);
 		} else {
 			setQuizFinished(true);
+			//logic for push notification
+			setLastRunThrough(Date.now());
 		}
 	};
 
@@ -44,7 +47,7 @@ export const QuizView = ({ route, navigation, theme }) => {
 		<ScreenContainer hasSafeArea={true} scrollable={false}>
 			<Container useThemeGutterPadding={true}>
 				<View style={styles.mainCard}>
-					<View style={styles.viewA3}>
+					<View style={styles.cardHeader}>
 						<Text style={StyleSheet.flatten([theme.typography.subtitle2, { color: theme.colors.light }])}>
 							{`${currentQuestionIndex + 1}/${totalQuestions}`}
 						</Text>
@@ -66,14 +69,9 @@ export const QuizView = ({ route, navigation, theme }) => {
 				</View>
 			</Container>
 			<Divider color={theme.colors.divider} style={styles.dividerQL} />
-			<View style={styles.view3H}>
-				<FAB onPress={addWrong} type="standard" icon="Feather/x" color={theme.colors.custom_rgb201_0_0} />
-				<FAB
-					onPress={addCorrect}
-					color={theme.colors.custom_rgb0_201_25}
-					type="standard"
-					icon="Feather/check"
-				/>
+			<View style={styles.fabWrapper}>
+				<FAB onPress={addWrong} type="standard" icon="Feather/x" color={'red'} />
+				<FAB onPress={addCorrect} color={'green'} type="standard" icon="Feather/check" />
 			</View>
 		</ScreenContainer>
 	);
@@ -93,19 +91,19 @@ const styles = StyleSheet.create({
 		borderTopWidth: 1,
 		borderLeftWidth: 1,
 	},
-	viewA3: {
+	cardHeader: {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 	},
 	dividerQL: {
 		height: 1,
 	},
-	view3H: {
+	fabWrapper: {
 		flexDirection: 'row',
 		alignContent: 'space-between',
 		justifyContent: 'space-around',
 		alignItems: 'flex-end',
-		minHeight: 150,
+		minHeight: 100,
 	},
 });
 

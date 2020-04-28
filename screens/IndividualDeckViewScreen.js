@@ -9,9 +9,9 @@ export const IndividualDeckView = ({ route, navigation, theme }) => {
 	const [currentDeck, setCurrentDeck] = useState(route.params.currentDeck);
 
 	useEffect(() => {
+		//need a better way to do this(like in my class DeckList component)- works for now... many hours spent...
 		const interval = setInterval(() => {
 			getDeck(title).then((response) => {
-				//response should be the currentDeck
 				setTitle(response.title);
 				setQuestions(response.questions);
 				setCurrentDeck(response);

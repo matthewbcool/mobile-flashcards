@@ -1,6 +1,8 @@
 import { AsyncStorage } from 'react-native';
-export const ALL_DECKS = 'Flashcards:allDecks';
-
+//keys
+export const ALL_DECKS = 'allDecks';
+export const LAST_DECK_COMPLETE = 'LastDeckComplete';
+//starter data
 export const decks = {
 	React: {
 		title: 'React',
@@ -59,12 +61,6 @@ export const getDeck = async (deckKey) => {
 	try {
 		let decks = JSON.parse(await AsyncStorage.getItem(ALL_DECKS));
 		let deck = decks[deckKey];
-		let deckArray = [];
-		/* 		for (const [title, questions] of deckEntries) {
-			let numCards = questions.questions.length;
-			deckArray.push({ title: `${title}`, num: `${numCards}` });
-		} */
-
 		return deck;
 	} catch (e) {
 		console.log(e.message);
@@ -101,7 +97,7 @@ export const addCardToDeck = async (title, newQuestionsArray) => {
 		console.log(e.message);
 	}
 };
-
+//logger function for checking the store
 export const storeLogger = async (KEY) => {
 	try {
 		let item = await AsyncStorage.getItem(KEY);
@@ -111,7 +107,25 @@ export const storeLogger = async (KEY) => {
 		console.log(e.message);
 	}
 };
-
+//only using for testing for now
 export const resetStorage = async () => {
 	AsyncStorage.clear();
+};
+
+export const getLastRunThrough = async () => {
+	//check the last time the user went to the end of a deck
+	try {
+		return await AsyncStorage.getItem(LAST_DECK_COMPLETE);
+	} catch (e) {
+		console.log(e.message);
+	}
+};
+
+export const setLastRunThrough = async (timeComplete) => {
+	//check the last time the user went to the end of a deck
+	try {
+		await AsyncStorage.setItem(LAST_DECK_COMPLETE, JSON.stringify(timeComplete));
+	} catch (e) {
+		console.log(e.message);
+	}
 };
