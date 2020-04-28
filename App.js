@@ -13,7 +13,15 @@ import IndividualDeckView from './screens/IndividualDeckViewScreen';
 import QuizView from './screens/QuizViewScreen';
 import NewQuestionView from './screens/NewQuestionViewScreen';
 import NewDeckView from './screens/NewDeckViewScreen';
-import { initAsyncStore, decks, storeLogger, ALL_DECKS, LAST_DECK_COMPLETE, getLastRunThrough } from './data/decks';
+import {
+	initAsyncStore,
+	decks,
+	resetStorage,
+	storeLogger,
+	ALL_DECKS,
+	LAST_DECK_COMPLETE,
+	getLastRunThrough,
+} from './data/decks';
 
 const Stack = createStackNavigator();
 
@@ -55,19 +63,19 @@ export default class App extends React.PureComponent {
 
 	componentDidMount() {
 		this._isMounted = true;
-		this.registerForPushNotificationsAsync();
-		this._notificationSubscription = Notifications.addListener(this._handleNotification);
+		//this.registerForPushNotificationsAsync();
+		//this._notificationSubscription = Notifications.addListener(this._handleNotification);
 		initAsyncStore(decks);
 		this._lastRunThrough();
 		//logic for notification here for now
 		//check if the last time the user completed a card was over 24 hours and push notification
 		//TO DO: set up as background task and test
-		let lastTime = new Date(this.state.lastTime);
+		/* 	let lastTime = new Date(this.state.lastTime);
 		let now = new Date();
 		let note = 'Time to do a flashcard quiz';
 		if (this._checkTimeDiff(lastTime, now)) {
 			this._handleNotification(note);
-		}
+		} */
 		this._isMounted = false;
 	}
 
